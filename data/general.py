@@ -9,3 +9,34 @@ full_req = {'lat': '59.56',
             } # lat = долгота max = 180, lon = широта max = 90
 
 
+def main_shema_json():
+    shema = {
+        "now": {"type": "number"},
+        "now_dt": {"type": "string"},
+        "info": {"type": "object"},
+        "fact": {"type": "object"},
+        "forecasts": {"type": "object"}
+    }
+    return shema
+
+
+empty_req_no_lat = {
+            'lon': '30.95',
+            'lang': 'ru_RU',
+            'limit': '7',
+            'hours': 'false',
+            'extra': 'false',
+            }
+
+empty_req_no_lon = {
+            'lat': '59.56',
+            'lang': 'ru_RU',
+            'limit': '7',
+            'hours': 'false',
+            'extra': 'false',
+            }
+
+exceeds_par = {'lat': '200.20',
+               'lon': '1100.56'}
+
+

@@ -1,6 +1,6 @@
 import pytest
-import json
-from data.general import MY_TOKEN as TOKEN, full_req
+import cerberus
+from data.general import MY_TOKEN as TOKEN, full_req, main_shema_json
 
 
 @pytest.mark.parametrize("test_input", ["lat': '40,5', 'lon': '64,5}",
@@ -33,7 +33,7 @@ def test_3_location(req_ya_api_weather):
 def test_4_test_lang(req_ya_api_weather, test_input, expected_result):
     full_req['lang'] = test_input
     r = req_ya_api_weather.get(full_req, TOKEN)
-    geo_lang = r.json()1
+    geo_lang = r.json()
     assert geo_lang["geo_object"]['locality']['name'] == expected_result
 
 
@@ -43,4 +43,26 @@ def test_5_count_day(req_ya_api_weather, count_day):
     r = req_ya_api_weather.get(full_req, TOKEN)
     count_date = str(r.json())
     assert count_date.count('date_ts') == count_day
+
+
+@pytest.mark.parametrize("input_count_day", range(1, 8))
+def test_6_count_block_hours(req_ya_api_weather, input_count_day):
+    count_block_hours = input_count_day
+    full_req['limit'] = input_count_day
+    r = req_ya_api_weather.get(full_req, TOKEN)
+    count_date = str(r.json())
+    assert count_date.count('hours') == count_block_hours and count_date.count('hours') != []
+
+
+# def test_7_valid_main_shema(req_ya_api_weather):
+#     r = req_ya_api_weather.get(full_req, TOKEN)
+#     response = r.json()
+#     v = cerberus.Validator()
+#     assert v.validate(response, main_shema_json())
+
+#TODO: добавить тесты на 204 ошибку(значение не найдено)
+
+
+
+
 
