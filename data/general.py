@@ -36,7 +36,7 @@ empty_req_no_lon = {
             'extra': 'false',
             }
 
-exceeds_par = {'lat': '200.20',
-               'lon': '1100.56'}
+exceeds_par = {'lat': '200432423423.5345345320',
+               'lon': '1105345345340.534534534556'}
 
 

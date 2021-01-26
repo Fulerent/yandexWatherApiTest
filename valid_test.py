@@ -3,10 +3,10 @@ import cerberus
 from data.general import MY_TOKEN as TOKEN, full_req, main_shema_json
 
 
-@pytest.mark.parametrize("test_input", ["lat': '40,5', 'lon': '64,5}",
-                                        "lat': '39,891', 'lon': '51,6}",
-                                        "lat': '56.237654', 'lon': '58.004785}",
-                                        "lat': '37,61', 'lon': '55,755}"
+@pytest.mark.parametrize("test_input", ["lat': '40.5', 'lon': '64.5",
+                                        "lat': '39.891', 'lon': '51.6",
+                                        "lat': '56.237654', 'lon': '58.004785",
+                                        "lat': '37.61', 'lon': '55.755"
                                         ])
 def test_1_status_empty_req(req_ya_api_weather, test_input):
     r = req_ya_api_weather.get(test_input, TOKEN)
@@ -61,6 +61,15 @@ def test_6_count_block_hours(req_ya_api_weather, input_count_day):
 #     assert v.validate(response, main_shema_json())
 
 #TODO: добавить тесты на 204 ошибку(значение не найдено)
+
+def test_8_geolocation_not_found(req_ya_api_weather):
+    full_req['lat'] = '180.3'
+    full_req['lon'] = '30.95'
+    r = req_ya_api_weather.get(full_req, TOKEN)
+    r_code = r.status_code
+    assert r_code == 404
+
+
 
 
 
